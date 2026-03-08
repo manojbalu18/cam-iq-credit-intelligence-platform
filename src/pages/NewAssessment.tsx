@@ -189,27 +189,27 @@ export default function NewAssessment() {
           setAssessmentId(assessment.id);
 
           // Save fraud flags, research findings, covenants in parallel
-          const promises: Promise<unknown>[] = [];
+          const promises = [];
 
           if (result.fraud_flags?.length) {
             promises.push(
               supabase.from('fraud_flags').insert(
                 result.fraud_flags.map(f => ({ assessment_id: assessment.id, ...f }))
-              )
+              ).then(() => {})
             );
           }
           if (result.research_findings?.length) {
             promises.push(
               supabase.from('research_findings').insert(
                 result.research_findings.map(r => ({ assessment_id: assessment.id, ...r }))
-              )
+              ).then(() => {})
             );
           }
           if (result.covenants?.length) {
             promises.push(
               supabase.from('covenants').insert(
                 result.covenants.map(c => ({ assessment_id: assessment.id, covenant_text: c }))
-              )
+              ).then(() => {})
             );
           }
 
