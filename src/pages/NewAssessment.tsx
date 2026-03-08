@@ -350,20 +350,91 @@ export default function NewAssessment() {
           <Card>
             <CardHeader>
               <CardTitle>Document Upload</CardTitle>
-              <p className="text-sm text-muted-foreground">All documents processed using AWS Textract OCR with Devanagari and English support</p>
+              <p className="text-sm text-muted-foreground">Upload financial documents for AI analysis · Supported: PDF, Excel, CSV, Images · Max 50MB each</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {['GSTR-3B Returns *', 'GSTR-2A Returns *', 'ITR-6 / ITR-7 *', 'Bank Statements (24 Months) *', 'MCA / ROC Filing *', 'Annual Report *', 'Legal Notices (Optional)'].map((doc) => (
-                  <div key={doc} className="border border-dashed border-border rounded-lg p-4 text-center hover:border-primary/50 transition-colors cursor-pointer">
-                    <p className="font-medium text-sm">{doc}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">Click to upload or drag and drop · Max 50MB</p>
-                  </div>
-                ))}
+                {DOC_TYPES.map((doc) => {
+                  const upload = uploads[doc.key];
+                  return (
+                    <div
+                      key={doc.key}
+                      className={cn(
+                        'border rounded-lg p-4 transition-colors relative',
+                        upload?.uploaded
+                          ? 'border-cam-success/50 bg-cam-success/5'
+                          : upload?.error
+                          ? 'border-cam-danger/50 bg-cam-danger/5'
+                          : 'border-dashed border-border hover:border-primary/50 cursor-pointer'
+                      )}
+                      onClick={() => !upload?.uploaded && fileInputRefs.current[doc.key]?.click()}
+                      onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const file = e.dataTransfer.files[0];
+                        if (file) handleFileSelect(doc.key, file);
+                      }}
+                    >
+                      <input
+                        type="file"
+                        className="hidden"
+                        ref={el => { fileInputRefs.current[doc.key] = el; }}
+                        accept=".pdf,.xlsx,.xls,.csv,.jpg,.jpeg,.png"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) handleFileSelect(doc.key, file);
+                          e.target.value = '';
+                        }}
+                      />
+
+                      {upload?.uploaded ? (
+                        <div className="flex items-center gap-2">
+                          <FileCheck className="h-5 w-5 text-cam-success flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm text-cam-success truncate">{upload.file.name}</p>
+                            <p className="text-[10px] text-muted-foreground">{(upload.file.size / 1024 / 1024).toFixed(1)} MB · Uploaded</p>
+                          </div>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); removeFile(doc.key); }}
+                            className="text-muted-foreground hover:text-cam-danger transition-colors"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ) : upload?.uploading ? (
+                        <div className="flex items-center gap-2 justify-center">
+                          <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                          <p className="text-sm text-muted-foreground">Uploading {upload.file.name}...</p>
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <Upload className="h-5 w-5 mx-auto text-muted-foreground mb-1" />
+                          <p className="font-medium text-sm">{doc.label} {doc.required ? '*' : '(Optional)'}</p>
+                          <p className="text-[10px] text-muted-foreground mt-1">Click or drag and drop · Max 50MB</p>
+                          {upload?.error && <p className="text-[10px] text-cam-danger mt-1">{upload.error}</p>}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
+
+              <div className="bg-secondary/50 rounded-lg p-3 text-xs text-muted-foreground">
+                <p><strong>{Object.values(uploads).filter(u => u?.uploaded).length}</strong> of {DOC_TYPES.length} documents uploaded
+                  {!requiredDocsUploaded && <span className="text-cam-warning ml-1">· Upload all required (*) documents to proceed</span>}
+                </p>
+              </div>
+
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => setStep(0)}>← Back</Button>
-                <Button onClick={() => setStep(2)} className="flex-1">Proceed to AI Analysis →</Button>
+                <Button
+                  onClick={() => setStep(2)}
+                  className="flex-1"
+                  disabled={!requiredDocsUploaded}
+                >
+                  Proceed to AI Analysis →
+                </Button>
               </div>
             </CardContent>
           </Card>
