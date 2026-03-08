@@ -17,6 +17,26 @@ import { useAuth } from '@/hooks/useAuth';
 const STEPS = ['Company Details', 'Document Upload', 'AI Analysis', 'Field Insights'];
 const SECTORS = ['Manufacturing', 'Real Estate', 'Trading', 'Infrastructure', 'Services', 'FMCG', 'Steel', 'Textile', 'Pharma', 'Shipping', 'Construction', 'Agriculture', 'IT', 'Hospitality'];
 
+const DOC_TYPES = [
+  { key: 'gstr3b', label: 'GSTR-3B Returns', required: true },
+  { key: 'gstr2a', label: 'GSTR-2A Returns', required: true },
+  { key: 'itr', label: 'ITR-6 / ITR-7', required: true },
+  { key: 'bank', label: 'Bank Statements (24 Months)', required: true },
+  { key: 'mca', label: 'MCA / ROC Filing', required: true },
+  { key: 'annual', label: 'Annual Report', required: true },
+  { key: 'legal', label: 'Legal Notices', required: false },
+] as const;
+
+type DocKey = typeof DOC_TYPES[number]['key'];
+
+interface UploadedFile {
+  file: File;
+  uploading: boolean;
+  uploaded: boolean;
+  storagePath?: string;
+  error?: string;
+}
+
 const ANALYSIS_STAGES = [
   'Initializing CAM-IQ Analysis Engine...',
   'Cross-referencing GST & ITR data patterns...',
