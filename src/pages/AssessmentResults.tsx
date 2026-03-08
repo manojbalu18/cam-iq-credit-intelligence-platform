@@ -140,7 +140,7 @@ export default function AssessmentResults() {
             <p className="text-sm text-primary-foreground/80">{a.borrower_name} · {a.cin || 'N/A'}</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="secondary" size="sm" className="gap-1"><Download className="h-4 w-4" /> Download CAM PDF</Button>
+            <Button variant="secondary" size="sm" className="gap-1" onClick={() => generateCAMPdf(a, fraudFlags, findings, covenants)}><Download className="h-4 w-4" /> Download CAM PDF</Button>
             <Button variant="secondary" size="sm" className="gap-1"><Share2 className="h-4 w-4" /> Share</Button>
           </div>
         </div>
