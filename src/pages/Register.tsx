@@ -17,12 +17,15 @@ import type { AssessmentStatus } from '@/lib/types';
 type SortField = 'borrower_name' | 'composite_score' | 'loan_requested' | 'created_at' | 'status';
 type SortDir = 'asc' | 'desc';
 
+const PAGE_SIZE = 15;
+
 export default function Register() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const [page, setPage] = useState(1);
 
   const { data: assessments, isLoading } = useQuery({
     queryKey: ['register-assessments'],
