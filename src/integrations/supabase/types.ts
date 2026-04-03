@@ -80,6 +80,127 @@ export type Database = {
         }
         Relationships: []
       }
+      collateral_liens: {
+        Row: {
+          amount: number | null
+          created_at: string
+          id: string
+          lien_holder: string | null
+          lien_type: string | null
+          priority_order: number | null
+          property_id: string
+          status: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          id?: string
+          lien_holder?: string | null
+          lien_type?: string | null
+          priority_order?: number | null
+          property_id: string
+          status?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          id?: string
+          lien_holder?: string | null
+          lien_type?: string | null
+          priority_order?: number | null
+          property_id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collateral_liens_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "collateral_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collateral_properties: {
+        Row: {
+          area_sqft: number | null
+          assessed_value: number | null
+          assessment_id: string
+          created_at: string
+          document_path: string | null
+          ec_date: string | null
+          ec_number: string | null
+          ec_status: string | null
+          encumbrances: string | null
+          id: string
+          ltv_ratio: number | null
+          market_value: number | null
+          ocr_confidence: number | null
+          ocr_raw_data: Json | null
+          owner_name: string | null
+          property_address: string | null
+          property_type: string | null
+          registered_value: number | null
+          registration_number: string | null
+          updated_at: string
+          verification_status: string | null
+        }
+        Insert: {
+          area_sqft?: number | null
+          assessed_value?: number | null
+          assessment_id: string
+          created_at?: string
+          document_path?: string | null
+          ec_date?: string | null
+          ec_number?: string | null
+          ec_status?: string | null
+          encumbrances?: string | null
+          id?: string
+          ltv_ratio?: number | null
+          market_value?: number | null
+          ocr_confidence?: number | null
+          ocr_raw_data?: Json | null
+          owner_name?: string | null
+          property_address?: string | null
+          property_type?: string | null
+          registered_value?: number | null
+          registration_number?: string | null
+          updated_at?: string
+          verification_status?: string | null
+        }
+        Update: {
+          area_sqft?: number | null
+          assessed_value?: number | null
+          assessment_id?: string
+          created_at?: string
+          document_path?: string | null
+          ec_date?: string | null
+          ec_number?: string | null
+          ec_status?: string | null
+          encumbrances?: string | null
+          id?: string
+          ltv_ratio?: number | null
+          market_value?: number | null
+          ocr_confidence?: number | null
+          ocr_raw_data?: Json | null
+          owner_name?: string | null
+          property_address?: string | null
+          property_type?: string | null
+          registered_value?: number | null
+          registration_number?: string | null
+          updated_at?: string
+          verification_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collateral_properties_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "assessments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       covenants: {
         Row: {
           assessment_id: string

@@ -1,4 +1,4 @@
-import { LayoutDashboard, Plus, ClipboardList, AlertTriangle, Settings, LogOut, Shield, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, Plus, ClipboardList, AlertTriangle, Settings, LogOut, Shield, ChevronRight, Building2 } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -13,6 +13,7 @@ const navItems = [
   { title: 'New Assessment', url: '/assessment/new', icon: Plus, highlight: true },
   { title: 'Assessment Register', url: '/register', icon: ClipboardList },
   { title: 'Fraud Intelligence', url: '/fraud-intelligence', icon: AlertTriangle },
+  { title: 'Collateral', url: '/collateral', icon: Building2 },
   { title: 'Settings', url: '/settings', icon: Settings },
 ];
 

@@ -9,6 +9,7 @@ import AssessmentResults from "@/pages/AssessmentResults";
 import FraudIntelligence from "@/pages/FraudIntelligence";
 import Register from "@/pages/Register";
 import Settings from "@/pages/Settings";
+import CollateralAssessment from "@/pages/CollateralAssessment";
 import NotFound from "@/pages/NotFound";
 
 export const AnimatedRoutes = () => {
@@ -24,6 +25,7 @@ export const AnimatedRoutes = () => {
         <Route path="/fraud-intelligence" element={<ProtectedRoute><PageTransition><FraudIntelligence /></PageTransition></ProtectedRoute>} />
         <Route path="/register" element={<ProtectedRoute><PageTransition><Register /></PageTransition></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute><PageTransition><Settings /></PageTransition></ProtectedRoute>} />
+        <Route path="/collateral" element={<ProtectedRoute><PageTransition><CollateralAssessment /></PageTransition></ProtectedRoute>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
