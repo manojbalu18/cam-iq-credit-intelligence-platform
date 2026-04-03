@@ -9,6 +9,7 @@ import AssessmentResults from "@/pages/AssessmentResults";
 import FraudIntelligence from "@/pages/FraudIntelligence";
 import Register from "@/pages/Register";
 import Settings from "@/pages/Settings";
+import CollateralAssessment from "@/pages/CollateralAssessment";
 import NotFound from "@/pages/NotFound";
 
 export const AnimatedRoutes = () => {
