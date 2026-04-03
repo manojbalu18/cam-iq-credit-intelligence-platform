@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface KPICardProps {
   title: string;
@@ -22,24 +23,34 @@ const colorMap = {
 export function KPICard({ title, value, icon: Icon, color = 'orange', pulse, subtitle }: KPICardProps) {
   const c = colorMap[color];
   return (
-    <Card className={cn(
-      'group relative overflow-hidden border-border/30 transition-all duration-300 hover:border-border/50 hover:translate-y-[-2px]',
-      c.glow
-    )}>
-      <div className={cn('absolute top-0 left-0 right-0 h-[2px]', c.bg)} />
-      <CardContent className="flex items-center gap-4 p-5">
-        <div className={cn('rounded-xl p-3 transition-transform duration-300 group-hover:scale-110', c.bg, 'border', c.border)}>
-          <Icon className={cn('h-5 w-5', c.text)} />
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">{title}</p>
-          <p className={cn('text-2xl font-bold font-mono flex items-center gap-2', c.text)}>
-            {pulse && <span className="inline-block h-2 w-2 rounded-full bg-destructive animate-live-pulse shrink-0" />}
-            {value}
-          </p>
-          {subtitle && <p className="text-[10px] text-muted-foreground/60 mt-0.5">{subtitle}</p>}
-        </div>
-      </CardContent>
-    </Card>
+    <motion.div
+      whileHover={{ y: -4, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+    >
+      <Card className={cn(
+        'group relative overflow-hidden border-border/30 transition-all duration-300 hover:border-border/50',
+        c.glow
+      )}>
+        <div className={cn('absolute top-0 left-0 right-0 h-[2px]', c.bg)} />
+        <CardContent className="flex items-center gap-4 p-5">
+          <motion.div
+            className={cn('rounded-xl p-3 transition-colors', c.bg, 'border', c.border)}
+            whileHover={{ rotate: [0, -10, 10, 0] }}
+            transition={{ duration: 0.5 }}
+          >
+            <Icon className={cn('h-5 w-5', c.text)} />
+          </motion.div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">{title}</p>
+            <p className={cn('text-2xl font-bold font-mono flex items-center gap-2', c.text)}>
+              {pulse && <span className="inline-block h-2 w-2 rounded-full bg-destructive animate-live-pulse shrink-0" />}
+              {value}
+            </p>
+            {subtitle && <p className="text-[10px] text-muted-foreground/60 mt-0.5">{subtitle}</p>}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
