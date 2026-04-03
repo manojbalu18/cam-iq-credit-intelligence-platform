@@ -13,6 +13,7 @@ const navItems = [
   { title: 'New Assessment', url: '/assessment/new', icon: Plus, highlight: true },
   { title: 'Assessment Register', url: '/register', icon: ClipboardList },
   { title: 'Fraud Intelligence', url: '/fraud-intelligence', icon: AlertTriangle },
+  { title: 'Collateral', url: '/collateral', icon: Building2 },
   { title: 'Settings', url: '/settings', icon: Settings },
 ];
 
